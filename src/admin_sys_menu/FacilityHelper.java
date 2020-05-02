@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package admin_sys_menu;
 
 
@@ -16,4 +17,18 @@ public abstract class FacilityHelper {
                                               List<Object> appointments,
                                               List<Object>currentPatients, List<Object>diseaseMedication);
 
+=======
+package admin_sys_menu;
+
+
+
+import structure.Facility;
+
+
+
+public abstract class FacilityHelper {
+
+    public abstract Facility buildInitialFacility();
+
+>>>>>>> db828be700060fdd2e88c7d3ebcb395d5f60525e
 }
