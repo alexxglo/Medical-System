@@ -1,20 +1,46 @@
 import admin_sys_menu.FacilityHelper;
-import structure.Employee;
-import structure.Facility;
+import structure.*;
 import system_init.System_builder;
-import structure.CuredPatient;
 
+import javax.imageio.plugins.tiff.ExifParentTIFFTagSet;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Collections;
 
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        Facility facility = new System_builder().buildInitialFacility();
 
+
+        // LOADING
         Scanner scanner = new Scanner(System.in);
+
+        Patient servicePatient = new Patient();
+        Medication serviceMedication = new Medication();
+        Employee serviceEmployee = new Employee();
+        Appointment_type serviceAppointmentType = new Appointment_type();
+        Appointment serviceAppointment = new Appointment();
+
+        ArrayList<Object> patientList = servicePatient.readFrom();
+        ArrayList<Object> medicationList = serviceMedication.readFrom();
+        ArrayList<Object> employeeList = serviceEmployee.readFrom();
+        ArrayList<Object> appointmentTypeList = serviceAppointmentType.readFrom();
+        ArrayList<Object> appointmentList = serviceAppointment.readFrom();
+
+        //Facility facility = new System_builder().buildInitialFacility(); // from program
+
+        Facility facility = new System_builder().buildCSVFacility(employeeList,appointmentTypeList,appointmentList,patientList,medicationList);
+
+
+        // WRITING HEADER + STUFF
+        //servicePatient.writeHeader();
 
         System.out.println("\n");
 
@@ -68,17 +94,47 @@ public class Main {
 
                     facility.add_employee(employee);
 
+                    serviceEmployee.writeIn(employee);
+
                     System.out.println("To choose another command, press 11.");
 
                     break;
 
                 case "2":
 
-                    System.out.println("The id of the employee you wish to delete: ");
+                    System.out.println("Our current employees are: ");
+
+                    System.out.println("\n");
+
+                    Scanner sc = new Scanner(new File("C:\\Users\\Aly\\IdeaProjects\\Medical_system\\src\\structure\\employees.csv"));
+                    sc.useDelimiter(",");
+                    sc.nextLine();
+                    int order=1;
+                    while (sc.hasNext())
+                    {
+                        System.out.print(order+" "+sc.next()+" ");
+                        System.out.print(sc.next()+"\n ");
+                        sc.nextLine();
+                        order = order+1;
+                    }
+                    sc.close();
+
+                    System.out.println("\n The id of the employee you wish to delete: ");
 
                     String index = scanner.next();
 
-                    facility.delete_employee(Integer.valueOf(index));
+                    facility.delete_employee(Integer.valueOf(index)-1);
+
+                    BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("C:\\Users\\Aly\\IdeaProjects\\Medical_system\\src\\structure\\employees.csv", false));
+
+                    serviceEmployee.writeHeader();
+                    List<Object>employeeListUpdated;
+                    employeeListUpdated = facility.getEmployees();
+                    for(int i=0;i<employeeListUpdated.size();i++){
+                        serviceEmployee.writeIn(employeeListUpdated.get(i));
+                    }
+
+
 
                     System.out.println("To choose another command, press 11.");
 
@@ -163,24 +219,6 @@ public class Main {
 
                 case "7":
 
-                    System.out.println("Do you want to list the names alphabetically? ");
-                    System.out.println("Press 1 for alphabetical list");
-                    System.out.println("Press 2 for normal list");
-                    String option3 = scanner.next();
-                    switch (option3) {
-
-                        case "1":
-
-                            System.out.println("Our facility treats the following patients: ");
-
-                            System.out.println("\n");
-
-                            System.out.println(facility.getCurrentPatientsAlphabetically());
-
-                            break;
-
-                        case "2":
-
                             System.out.println("Our facility treats the following patients: ");
 
                             System.out.println("\n");
@@ -189,17 +227,6 @@ public class Main {
 
                             break;
 
-                        default:
-
-                            System.out.println("\n");
-
-                            System.out.println("You have chosen a wrong command. Please try again.");
-
-                    }
-
-                    System.out.println("To choose another command, press 11.");
-
-                    break;
 
                 case "8" :
 
@@ -266,9 +293,6 @@ public class Main {
             }
 
         }
-
-
-
 
 
     }

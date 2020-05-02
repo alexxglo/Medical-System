@@ -2,15 +2,15 @@ package admin_sys_menu;
 
 
 
-import structure.Employee;
+        import structure.Employee;
 
-import structure.Appointment;
+        import structure.Appointment;
 
-import structure.Appointment_type;
+        import structure.Appointment_type;
 
-import structure.CuredPatient;
+        import structure.CuredPatient;
 
-import structure.CurrentPatient;
+        import structure.CurrentPatient;
 
 public interface commands {
 

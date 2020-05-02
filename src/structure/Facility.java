@@ -19,17 +19,17 @@ public class Facility implements commands {
 
     private String facility_location;
 
-    private List<Employee> employees = new ArrayList<>();
+    private List<Object> employees = new ArrayList<>();
 
-    private List<Appointment_type> appointment_types = new ArrayList<>();
+    private List<Object> appointment_types = new ArrayList<>();
 
-    private List<Appointment> appointments = new ArrayList<>();
+    private List<Object> appointments = new ArrayList<>();
 
     private List<CuredPatient> cured_patients = new ArrayList<>();
 
-    private List<CurrentPatient> currentPatients = new ArrayList<>();
+    private List<Object> currentPatients = new ArrayList<>();
 
-    private List<Medication> diseaseMedication = new ArrayList<>();
+    private List<Object> diseaseMedication = new ArrayList<>();
 
 
     public Facility(String facility_name, String facility_location) {
@@ -42,8 +42,8 @@ public class Facility implements commands {
 
 
 
-    public Facility(String facility_name, String facility_location, List<Employee> employees, List<Appointment_type> appointment_types,
-                    List<Appointment> appointments, List<CuredPatient>cured_patients, List<CurrentPatient>currentPatients, List<Medication>diseaseMedication) {
+    public Facility(String facility_name, String facility_location, List<Object> employees, List<Object> appointment_types,
+                    List<Object> appointments, List<CuredPatient>cured_patients, List<Object>currentPatients, List<Object>diseaseMedication) {
 
         this.facility_name = facility_name;
 
@@ -97,23 +97,21 @@ public class Facility implements commands {
 
 
 
-    public List<Employee> getEmployees() {
+    public List<Object> getEmployees() {
 
         return employees;
-
     }
 
 
 
-    public void setEmployees(List<Employee> employees) {
+    public void setEmployees(List<Object> employees) {
 
         this.employees = employees;
 
     }
 
 
-
-    public List<Appointment_type> getAppointment_types() {
+    public List<Object> getAppointment_types() {
 
         return appointment_types;
 
@@ -121,7 +119,7 @@ public class Facility implements commands {
 
 
 
-    public void setAppointment_types(List<Appointment_type> appointment_types) {
+    public void setAppointment_types(List<Object> appointment_types) {
 
         this.appointment_types = appointment_types;
 
@@ -129,7 +127,7 @@ public class Facility implements commands {
 
 
 
-    public List<Appointment> getAppointments() {
+    public List<Object> getAppointments() {
 
         return appointments;
 
@@ -137,7 +135,7 @@ public class Facility implements commands {
 
 
 
-    public void setAppointments(List<Appointment> appointments) {
+    public void setAppointments(List<Object> appointments) {
 
         this.appointments = appointments;
 
@@ -176,34 +174,34 @@ public class Facility implements commands {
     }
 
 
-    public List<CurrentPatient> getCurrentPatients() {
+    public List<Object> getCurrentPatients() {
 
         return currentPatients;
 
     }
 
-    public List<CurrentPatient> getCurrentPatientsAlphabetically() {
+    public List<Object> getCurrentPatientsAlphabetically() {
 
-        Collections.sort(currentPatients, new Comparator<CurrentPatient>() {
+        Collections.sort(currentPatients, new Comparator<Object>() {
 
             @Override
 
-            public int compare(CurrentPatient o1, CurrentPatient o2) {
-                return o1.return_patient_name().compareTo(o2.return_patient_name());
+            public int compare(Object o1, Object o2) {
+                return ((CurrentPatient) o1).return_patient_name().compareTo(((CurrentPatient)o2).return_patient_name());
             }
         });
         return currentPatients;
     }
 
 
-    public List<Medication> getMedicationAlphabetically() {
+    public List<Object> getMedicationAlphabetically() {
 
-        Collections.sort(diseaseMedication, new Comparator<Medication>() {
+        Collections.sort(diseaseMedication, new Comparator<Object>() {
 
             @Override
 
-            public int compare(Medication o1, Medication o2) {
-                return o1.return_disease().compareTo(o2.return_disease());
+            public int compare(Object o1, Object o2) {
+                return ((Medication)o1).return_disease().compareTo(((Medication) o2).return_disease());
             }
         });
         return diseaseMedication;
